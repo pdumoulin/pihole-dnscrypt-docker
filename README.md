@@ -45,22 +45,16 @@ docker compose up -d pihole
 
 ### Verification
 
-1. dnscrypt-proxy works
+1. run healthcheck script
 
 ```bash
-dig @127.0.0.0 -p 5053 google.com
+./health.sh
 ```
 
-2. pihole works
-
-```bash
-dig @127.0.0.0 google.com
-```
-
-3. dns queries resolve from another host on same network
+2. dns queries resolve from another host on same network
 
 ```bash
 dig @192.168.50.17 google.com
 ```
 
-4. [admin portal](http://192.168.50.17:8080/admin/login) loads and can login
+3. [admin portal](http://192.168.50.17:8080/admin/login) loads and can login

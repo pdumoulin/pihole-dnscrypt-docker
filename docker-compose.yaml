@@ -1,24 +1,24 @@
 ---
 services:
   dnscrypt-proxy:
-    image: klutchell/dnscrypt-proxy:build-e1149f2614c18e574ab307df2d0e9d40ad29e3dd@sha256:38ee25acf6790543ca4403b729872c2324b1aa4c48a494165e5bb495aa668e7b  # yamllint disable-line rule:line-length
+    image: klutchell/dnscrypt-proxy:${DNSCRYPT_IMAGE_TAG}${DNSCRYPT_IMAGE_SHA}
     container_name: dnscrypt-proxy
     restart: always
     ports:
-      - "5053:5053/udp"
-      - "5053:5053/tcp"
+      - "${DNSCRYPT_HOST_DNS_PORT}:5053/udp"
+      - "${DNSCRYPT_HOST_DNS_PORT}:5053/tcp"
     networks:
       - dns_network
 
   pihole:
-    image: pihole/pihole:2026.09.0@sha256:5b9c8cf51de7d6d3f2240dbe72baf5f06e1fd39cb4d77a99fab4fa13e23bd1be  # yamllint disable-line rule:line-length
+    image: pihole/pihole:${PIHOLE_IMAGE_TAG}${PIHOLE_IMAGE_SHA}
     container_name: pihole
     ports:
-      - "53:53/tcp"
-      - "53:53/udp"
-      - "8080:80/tcp"
+      - "${PIHOLE_HOST_DNS_PORT}:53/tcp"
+      - "${PIHOLE_HOST_DNS_PORT}:53/udp"
+      - "${PIHOLE_HOST_ADMIN_PORT}:80/tcp"
     environment:
-      TZ: 'America/New_York'
+      TZ: ${PIHOLE_TZ}
       FTLCONF_dns_upstreams: 'dnscrypt-proxy#5053'
       FTLCONF_dns_listeningMode: 'ALL'
     env_file:
