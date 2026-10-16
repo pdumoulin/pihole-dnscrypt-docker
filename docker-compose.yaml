@@ -21,6 +21,8 @@ services:
       TZ: ${PIHOLE_TZ}
       FTLCONF_dns_upstreams: 'dnscrypt-proxy#5053'
       FTLCONF_dns_listeningMode: 'ALL'
+    volumes:
+      - ./etc-pihole:/etc/pihole
     env_file:
       - .env.secret
     restart: always
